@@ -1,0 +1,19 @@
+# Publicação no Render (https://render.com). O disco persistente é obrigatório: sem ele os dados se perdem a cada reinício.
+services:
+  - type: web
+    name: sistema-locacao
+    runtime: node
+    plan: starter
+    buildCommand: echo "sem etapa de build"
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - { key: NODE_VERSION, value: "22" }
+      - { key: DATA_DIR, value: /var/data }
+      - { key: TRUST_PROXY, value: "1" }
+      - { key: COOKIE_SECURE, value: "1" }
+      - { key: APP_TZ, value: America/Sao_Paulo }
+    disk:
+      name: dados
+      mountPath: /var/data
+      sizeGB: 1
